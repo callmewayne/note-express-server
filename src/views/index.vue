@@ -31,7 +31,8 @@
 </style>
 <template>
     <div class="index">
-        <Row type="flex" justify="center" align="middle">
+        <Header />
+        <!-- <Row type="flex" justify="center" align="middle">
             <Col span="24">
                 <h1>
                     <img src="https://raw.githubusercontent.com/iview/iview/master/assets/logo.png">
@@ -41,10 +42,13 @@
                     <Button type="ghost" @click="handleStart">Start iView</Button>
                 </h2>
             </Col>
-        </Row>
+        </Row> -->
+
     </div>
 </template>
 <script>
+import Header from './header';
+import Main from './main';
     export default {
         methods: {
             handleStart() {
@@ -53,6 +57,9 @@
                     content: 'Now, enjoy the convenience of iView.'
                 });
             }
+        },
+        components:{
+            Header
         }
     };
 </script>

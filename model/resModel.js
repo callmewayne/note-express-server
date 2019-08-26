@@ -26,8 +26,8 @@ class SuccessModel extends BaseModel{
 
 
 class ErrorModel extends BaseModel{
-    constructor(data,message){
-        super(data,message)
+    constructor(message){
+        super(message)
         this.code = 204
         this.message = message
     }

@@ -31,6 +31,9 @@ router.post('/login', function(req, res, next) {
             res.json(
                 new ErrorModel('登陆失败')
                )  
+            // res.json(
+            //     new ErrorModel('登陆失败')
+            //    )  
         }
    })
 });

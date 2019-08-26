@@ -4,6 +4,15 @@ const { login }  = require('../controller/user')
 const {set } = require('../db/redis')
 const { SuccessModel,ErrorModel}  = require('../model/resModel')
 /* GET home page. */
+
+// router.all('*', function(req, res, next) {
+//     res.header("Access-Control-Allow-Origin", "*");
+//     res.header("Access-Control-Allow-Headers", "X-Requested-With");
+//     res.header("Access-Control-Allow-Methods","PUT,POST,GET,DELETE,OPTIONS");
+//     res.header("X-Powered-By",' 3.2.1')
+//     res.header("Content-Type", "application/json;charset=utf-8");
+//     next();
+//   });
 router.post('/login', function(req, res, next) {
   const { username,password} = req.body
    let result = login(username,password)
@@ -15,7 +24,7 @@ router.post('/login', function(req, res, next) {
            //httpOnly只允许后端修改cookie,expires设置过期时间
         //   res.setHeader('Set-Cookie',`username=${data.username}; path=/ ;httpOnly; expires=${getCookieExpires()}`)
            res.json(
-            new SuccessModel()
+            new SuccessModel(data)
            )  
            return
         }else{

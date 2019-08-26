@@ -5,7 +5,7 @@ var cookieParser = require('cookie-parser');//解析cookie模块，可以在路�
 var logger = require('morgan');//日志模块
 const session = require('express-session')
 const RedisStore = require('connect-redis')(session)//redis客户端
-
+const cors = require('cors')
 var indexRouter = require('./routes/index');
 var usersRouter = require('./routes/users');
 var blogRouter = require('./routes/blog');
@@ -16,6 +16,8 @@ const redisClient = require('./db/redis')
 const sessionStore = new RedisStore({
   client:redisClient
 })
+
+app.use(cors())
 
 app.use(session({
   secret: 'WJiol#23123_',

@@ -1,4 +1,6 @@
 const crypto = require('crypto')
+const jwt = require('jsonwebtoken')
+const jwt_decode = require('jwt-decode'); //無秘解析
 
 // 密匙
 const SECRET_KEY = 'WJiol_8776#'//随机写
@@ -15,6 +17,26 @@ function genPassword(password) {
     return md5(str)
 }
 
+//加密token
+function signToken(data){
+    var token = jwt.sign(data,'shh',{ expiresIn: 60 * 60 * 60})
+    return token
+}
+
+//解密token
+function verifyToken(token){
+
+    try {
+    var decoded = jwt_decode(token);
+    return decoded
+        
+    } catch (error) {
+        console.log(error)
+    }
+
+}
 module.exports = {
-    genPassword
+    genPassword,
+    signToken,
+    verifyToken
 }

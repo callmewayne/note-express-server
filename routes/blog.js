@@ -12,6 +12,7 @@ const {
     ErrorModel
 } = require('../model/resModel')
 const loginCheck = require('../middleware/loginCheck')
+const { signToken,verifyToken} = require('../utils/cryp')
 //统一的登录验证函数
 // const loginCheck = (req)=>{
 //     if(!req.session.username){
@@ -32,7 +33,9 @@ router.all('*', function(req, res, next) {
 
 /* GET home page. */
 router.get('/list', function (req, res, next) {
-    let author = req.query.author || ''
+    let token = req.headers.user
+    let userinfo = verifyToken(token)
+    let author = req.query.author || userinfo.realname
     let keyword = req.query.keyword || ''
 
     if (req.query.isadmin) {

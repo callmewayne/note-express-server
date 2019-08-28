@@ -2,7 +2,9 @@ var express = require('express');
 var router = express.Router();
 const { login }  = require('../controller/user')
 const {set } = require('../db/redis')
+const { signToken,verifyToken} = require('../utils/cryp')
 const { SuccessModel,ErrorModel}  = require('../model/resModel')
+const jwt = require('jsonwebtoken');
 /* GET home page. */
 
 // router.all('*', function(req, res, next) {
@@ -23,10 +25,21 @@ router.post('/login', function(req, res, next) {
            req.session.realname = data.realname
            //httpOnly只允许后端修改cookie,expires设置过期时间
         //   res.setHeader('Set-Cookie',`username=${data.username}; path=/ ;httpOnly; expires=${getCookieExpires()}`)
-           res.json(
-            new SuccessModel(data)
-           )  
-           return
+        try {
+            let tokendata = {
+                username: data.username,
+                realname: data.realname,
+                id:data.id
+            }
+      let token = signToken(tokendata)
+      res.json(
+        new SuccessModel(token)
+       )  
+       return
+        } catch (error) {
+            console.log(error)
+        }
+         
         }else{
             res.json(
                 new ErrorModel('登陆失败')
@@ -40,6 +53,8 @@ router.post('/login', function(req, res, next) {
 
 
    router.get('/session-test',(req,res,next)=>{
+       let token = req.headers.user
+       let userinfo = verifyToken(token)
       const session = req.session
       if(session.viewNum==null){
         session.viewNum=0

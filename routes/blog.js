@@ -33,9 +33,9 @@ router.all('*', function(req, res, next) {
 
 /* GET home page. */
 router.get('/list', function (req, res, next) {
-    let token = req.headers.user
+    let token = req.headers.token
     let userinfo = verifyToken(token)
-    let author = req.query.author || userinfo.realname
+    let author = req.query.author || userinfo.username
     let keyword = req.query.keyword || ''
 
     if (req.query.isadmin) {
@@ -78,7 +78,6 @@ router.post('/new', loginCheck, function (req, res, next) {
 });
 
 router.post('/update', loginCheck, function (req, res, next) {
-    req.body.id = req.query.id
     let result = updateBlog(req.body.id, req.body)
     return result.then(val => {
         if (val) {

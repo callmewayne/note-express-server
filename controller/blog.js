@@ -52,7 +52,7 @@ const updateBlog = (id,blogData={})=>{
     //id 就是要更新博客id
     //blogData 是一个博客对象，包含 title content 属性
    
-    const sql = `update blogs set title='${blogData.title}',content='${blogData.content}' 
+    const sql = `update blogs set title='${blogData.title}',content='${blogData.content}' ,lastmodifytime='${blogData.lastmodifytime}'
     where id=${id}`
     return exec(sql).then(updateBlog=>{
         //影响的行数
